@@ -37,15 +37,14 @@ public class OeuvreventeControleur {
         String destinationPage = "";
         try {
             OeuvreventeEntity uneOv = new OeuvreventeEntity();
-            uneOv.setTitreOeuvrevente(request.getParameter("txttitre"));
-            uneOv.setPrixOeuvrevente(Integer.parseInt(request.getParameter("txtprix")));
+            uneOv.setTitreOeuvrevente(request.getParameter("txttitreov"));
+            uneOv.setPrixOeuvrevente(Integer.parseInt(request.getParameter("txtprixov")));
+            ProprietaireService unProprietaireService = new ProprietaireService();
+            uneOv.setProprietaire(unProprietaireService.proprietaireById(Integer.parseInt(request.getParameter("txtproprietaireov"))));
             uneOv.setEtatOeuvrevente("L");
-            //uneOv.setProprietaire(new ProprietaireEntity());
             OeuvreventeService uneOeuvreventeService = new OeuvreventeService();
             uneOeuvreventeService.insertOeuvrevente(uneOv);
-
             request.setAttribute("mesOeuvreventes", uneOeuvreventeService.consulterListeOeuvrevente());
-
         } catch (Exception e) {
             request.setAttribute("MesErreurs", e.getMessage());
             destinationPage = "vues/Erreur";
@@ -78,8 +77,9 @@ public class OeuvreventeControleur {
             int unid = Integer.parseInt(request.getParameter("id"));
             OeuvreventeService unService = new OeuvreventeService();
             OeuvreventeEntity uneOv = unService.oeuvreventeById(unid);
-
             request.setAttribute("ov", uneOv);
+            ProprietaireService unProprietaireService = new ProprietaireService();
+            request.setAttribute("mesProprietaires", unProprietaireService.consulterListeProprietaire());
             destinationPage = "vues/modifierOeuvrevente";
         } catch (Exception e) {
             request.setAttribute("MesErreurs", e.getMessage());

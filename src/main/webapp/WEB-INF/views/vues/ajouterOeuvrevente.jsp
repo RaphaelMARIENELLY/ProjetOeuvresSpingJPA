@@ -15,9 +15,8 @@
         <div class="form-group">
             <label class="col-md-3 control-label">Titre de l'oeuvre : </label>
             <div class="col-md-3">
-                <INPUT type="text" name="txttitre" value="" id="titrev" class="form-control" min="0">
+                <INPUT type="text" name="txttitre" value="" id="titreov" class="form-control" min="0" required>
             </div>
-
         </div>
         <div class="row" >
             <div class="col-md-12" style ="border:none; background-color:transparent; height :20px;">
@@ -26,34 +25,27 @@
         <div class="form-group">
             <label class="col-md-3 control-label">Prix de l'oeuvre : </label>
             <div class="col-md-3">
-                <INPUT type="text" name="txtprix" value="" id="prix" class="form-control" min="0">
+                <INPUT type="text" name="txtprixov" value="" id="prixv" class="form-control" min="0" required>
             </div>
         </div>
         <div class="row" >
             <div class="col-md-12" style ="border:none; background-color:transparent; height :20px;">
             </div>
         </div>
-
-
-
         <div>
             <label for="selectprop">Choisir un propriétaire:</label>
 
-            <select id="selectprop">
-                <option value="">--Please choose an option--</option>
-
+            <select id="selectprop" name="txtproprietaireov" required>
+                <option value="">--Choisir un propriétaire--</option>
                 <c:forEach items="${mesProprietaires}" var="itemProp">
-
-                    <option value="${itemProp.nomProprietaire}">${itemProp.nomProprietaire}</option>
+                    <option value="${itemProp.idProprietaire}">${itemProp.nomProprietaire}</option>
                 </c:forEach>
-
             </select>
         </div>
         <div class="form-group">
             <button type="submit" class="btn btn-default btn-primary"><span class="glyphicon glyphicon-ok"></span>
                 Ajouter
             </button>
-
             <button type="button" class="btn btn-default btn-primary"
                     onclick="{
                             window.location = '../index.jsp';

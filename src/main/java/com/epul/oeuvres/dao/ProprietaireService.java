@@ -1,7 +1,6 @@
 package com.epul.oeuvres.dao;
 
 import com.epul.oeuvres.meserreurs.MonException;
-import com.epul.oeuvres.metier.OeuvreventeEntity;
 import com.epul.oeuvres.metier.ProprietaireEntity;
 
 import javax.persistence.EntityTransaction;
@@ -32,4 +31,26 @@ public class ProprietaireService extends EntityService{
         return mesProprietaires;
     }
 
+
+    /* Consultation d'un propriétaire par son numéro
+     */
+    public ProprietaireEntity proprietaireById(int numero) throws MonException {
+        List<ProprietaireEntity> proprietaires = null;
+        ProprietaireEntity proprietaire = new ProprietaireEntity();
+        try {
+            EntityTransaction transac = startTransaction();
+            transac.begin();
+
+            proprietaires = (List<ProprietaireEntity>)entitymanager.createQuery("SELECT p FROM ProprietaireEntity p WHERE a.idProprietaire="+numero).getResultList();
+            proprietaire = proprietaires.get(0);
+
+            entitymanager.close();
+        }catch (RuntimeException e)
+        {
+            new MonException("Erreur de lecture", e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return proprietaire;
+    }
 }
