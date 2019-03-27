@@ -34,7 +34,7 @@
 
                     <td><a class="btn btn-info" href="modifierOeuvrevente.htm?id=${item.idOeuvrevente}" role="button"><span
                             class="glyphicon glyphicon-pencil"></span> Modifier</a>
-                        <a class="btn btn-danger" href="reserverOeuvrevente.htm?id=${item.idOeuvrevente}" role="button"><span
+                        <a class="btn btn-danger" href="verifierSupprimerOeuvrevente.htm?id=${item.idOeuvrevente}" role="button"><span
                                 class="glyphicon glyphicon-remove-circle"></span> Supprimer</a></td>
                 </tr>
             </c:forEach>

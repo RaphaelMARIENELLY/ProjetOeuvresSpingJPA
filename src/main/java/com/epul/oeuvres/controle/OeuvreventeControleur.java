@@ -113,7 +113,25 @@ public class OeuvreventeControleur {
             request.setAttribute("mesOeuvreventes", unService.consulterListeOeuvrevente());
             destinationPage = "vues/listerOeuvrevente";
             //destinationPage = "index";
+        } catch (Exception e) {
+            request.setAttribute("MesErreurs", e.getMessage());
+            destinationPage = "vues/Erreur";
+        }
+        return new ModelAndView(destinationPage);
+    }
 
+
+    @RequestMapping(value = "verifierSupprimerOeuvrevente.htm")
+    public ModelAndView verifierSupprimerOeuvrevente(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        String destinationPage = "";
+        try {
+            int unid = Integer.parseInt(request.getParameter("id"));
+            OeuvreventeService unService = new OeuvreventeService();
+            OeuvreventeEntity uneOeuvrevente = unService.oeuvreventeById(unid);
+            request.setAttribute("ov", uneOeuvrevente);
+
+            destinationPage = "vues/verifierSupprimerOeuvrevente";
         } catch (Exception e) {
             request.setAttribute("MesErreurs", e.getMessage());
             destinationPage = "vues/Erreur";
@@ -121,5 +139,24 @@ public class OeuvreventeControleur {
 
         return new ModelAndView(destinationPage);
     }
+    @RequestMapping(value = "supprimerOeuvrevente.htm")
+    public ModelAndView supprimerOeuvrevente(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String destinationPage = "";
+        try {
+            OeuvreventeService unService = new OeuvreventeService();
+            int unid = Integer.parseInt(request.getParameter("id"));
+            OeuvreventeEntity uneOeuvrevente = unService.oeuvreventeById(unid);
+            unService.supprimerOeuvrevente(uneOeuvrevente);
+            request.setAttribute("mesOeuvreventes", unService.consulterListeOeuvrevente());
+            destinationPage = "vues/listerOeuvrevente";
+            //destinationPage = "index";
+        } catch (Exception e) {
+            request.setAttribute("MesErreurs", e.getMessage());
+            destinationPage = "vues/Erreur";
+        }
+
+        return new ModelAndView(destinationPage);
+    }
+
 
 }
