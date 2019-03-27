@@ -41,7 +41,7 @@ public class ProprietaireService extends EntityService{
             EntityTransaction transac = startTransaction();
             transac.begin();
 
-            proprietaires = (List<ProprietaireEntity>)entitymanager.createQuery("SELECT p FROM ProprietaireEntity p WHERE a.idProprietaire="+numero).getResultList();
+            proprietaires = (List<ProprietaireEntity>)entitymanager.createQuery("SELECT p FROM ProprietaireEntity p WHERE p.idProprietaire="+numero).getResultList();
             proprietaire = proprietaires.get(0);
 
             entitymanager.close();

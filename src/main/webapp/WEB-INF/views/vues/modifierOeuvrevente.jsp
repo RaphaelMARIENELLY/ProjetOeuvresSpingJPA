@@ -39,10 +39,10 @@
                 <c:forEach items="${mesProprietaires}" var="itemProp">
                     <c:choose>
                         <c:when test="${ov.proprietaire.idProprietaire == itemProp.idProprietaire}">
-                            <option value="${itemProp.idProprietaire}" selected>${itemProp.nomProprietaire}</option>
+                            <option value="${itemProp.idProprietaire}" selected>${itemProp.nomProprietaire} ${itemProp.prenomProprietaire} ${itemProp.idProprietaire}</option>
                         </c:when>
                         <c:otherwise>
-                            <option value="${itemProp.idProprietaire}">${itemProp.nomProprietaire}</option>
+                            <option value="${itemProp.idProprietaire}">${itemProp.nomProprietaire} ${itemProp.prenomProprietaire} ${itemProp.idProprietaire}</option>
                         </c:otherwise>
                     </c:choose>
                 </c:forEach>
@@ -65,7 +65,6 @@
             <div class="col-md-12" style ="border:none; background-color:transparent; height :20px;">
             </div>
         </div>
-        <div>
         <div class="form-group">
             <button type="submit" class="btn btn-default btn-primary"><span class="glyphicon glyphicon-ok"></span>
                 Valider

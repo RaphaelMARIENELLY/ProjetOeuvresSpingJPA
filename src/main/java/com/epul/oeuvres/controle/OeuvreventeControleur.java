@@ -42,6 +42,8 @@ public class OeuvreventeControleur {
             ProprietaireService unProprietaireService = new ProprietaireService();
             uneOv.setProprietaire(unProprietaireService.proprietaireById(Integer.parseInt(request.getParameter("txtproprietaireov"))));
             uneOv.setEtatOeuvrevente("L");
+
+            System.out.println("\n\n iiiiccciiiiiiii     "+uneOv.getTitreOeuvrevente() +  "    "+uneOv.getPrixOeuvrevente());
             OeuvreventeService uneOeuvreventeService = new OeuvreventeService();
             uneOeuvreventeService.insertOeuvrevente(uneOv);
             request.setAttribute("mesOeuvreventes", uneOeuvreventeService.consulterListeOeuvrevente());
@@ -78,8 +80,11 @@ public class OeuvreventeControleur {
             OeuvreventeService unService = new OeuvreventeService();
             OeuvreventeEntity uneOv = unService.oeuvreventeById(unid);
             request.setAttribute("ov", uneOv);
+
             ProprietaireService unProprietaireService = new ProprietaireService();
             request.setAttribute("mesProprietaires", unProprietaireService.consulterListeProprietaire());
+            System.out.print(request.getAttribute("mesProprietaires"));
+
             destinationPage = "vues/modifierOeuvrevente";
         } catch (Exception e) {
             request.setAttribute("MesErreurs", e.getMessage());
@@ -97,12 +102,14 @@ public class OeuvreventeControleur {
             int unid = Integer.parseInt(request.getParameter("id"));
             OeuvreventeService unService = new OeuvreventeService();
             OeuvreventeEntity uneOv = unService.oeuvreventeById(unid);
-
             uneOv.setTitreOeuvrevente(request.getParameter("txttitreov"));
             uneOv.setPrixOeuvrevente(Double.parseDouble(request.getParameter("txtprixov")));
+            ProprietaireService unProprietaireService = new ProprietaireService();
 
+            System.out.println("\n\niiiiiiiiiccccccccccccciiiiiiiii" + (Integer.parseInt(request.getParameter("txtproprietaireov")))  );
+            uneOv.setProprietaire(unProprietaireService.proprietaireById(Integer.parseInt(request.getParameter("txtproprietaireov"))));
+            System.out.println("\n\niiiiiiiiiccccccccccccciiiiiiiii" +uneOv.getProprietaire().getIdProprietaire());
             unService.updateOeuvrevente(uneOv);
-
             request.setAttribute("mesOeuvreventes", unService.consulterListeOeuvrevente());
             destinationPage = "vues/listerOeuvrevente";
             //destinationPage = "index";

@@ -15,7 +15,7 @@
         <div class="form-group">
             <label class="col-md-3 control-label">Titre de l'oeuvre : </label>
             <div class="col-md-3">
-                <INPUT type="text" name="txttitre" value="" id="titreov" class="form-control" min="0" required>
+                <INPUT type="text" name="txttitreov" value="" id="titreov" class="form-control" min="0" required>
             </div>
         </div>
         <div class="row" >
@@ -38,7 +38,7 @@
             <select id="selectprop" name="txtproprietaireov" required>
                 <option value="">--Choisir un propriétaire--</option>
                 <c:forEach items="${mesProprietaires}" var="itemProp">
-                    <option value="${itemProp.idProprietaire}">${itemProp.nomProprietaire}</option>
+                    <option value="${itemProp.idProprietaire}">${itemProp.nomProprietaire} ${itemProp.prenomProprietaire}</option>
                 </c:forEach>
             </select>
         </div>
