@@ -42,6 +42,18 @@
                         <li><a href="listerOeuvrevente.htm"><span class="glyphicon glyphicon-th-list"></span> Lister les oeuvres ventes</a></li>
                     </ul>
                 </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <span class="glyphicon glyphicon-user"></span>
+                        Oeuvres Prets
+                        <span class="caret"></span>
+                    </a>
+
+                    <ul class="dropdown-menu">
+                        <li><a href="ajouterOeuvrevente.htm"> <span class="glyphicon glyphicon-plus"></span> Ajout Oeuvre Pret</a></li>
+                        <li><a href="listerOeuvrevente.htm"><span class="glyphicon glyphicon-th-list"></span> Lister les oeuvres prets</a></li>
+                    </ul>
+                </li>
                 <li><a href="javascript:fermer()"><span class="glyphicon glyphicon-log-out"></span> Quitter</a></li>
                 </c:if>
 
