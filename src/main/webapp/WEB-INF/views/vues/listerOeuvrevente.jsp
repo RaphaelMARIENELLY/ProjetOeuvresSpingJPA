@@ -17,7 +17,7 @@
             <tr>
                 <th class="col-md-1">Numero</th>
                 <th class="col-md-2">Titre</th>
-                <th class="col-md-2">Prix</th>
+                <th class="col-md-1">Prix</th>
                 <th class="col-md-2">Nom propriétaire</th>
                 <th class="col-md-2">Prénom propriétaire</th>
             </tr>
@@ -32,7 +32,19 @@
                     <td>${item.proprietaire.prenomProprietaire}</td>
 
 
-                    <td><a class="btn btn-info" href="modifierOeuvrevente.htm?id=${item.idOeuvrevente}" role="button"><span
+                    <td>
+
+                        <c:choose>
+                            <c:when test="${item.etatOeuvrevente == 'L'}">
+                                <a class="btn btn-success" href="prereserverOeuvrevente.htm?id=${item.idOeuvrevente}" role="button" ><span
+                                        class="glyphicon glyphicon-ok-circle"></span> Reserver</a>
+                            </c:when>
+                            <c:otherwise>
+                                <a class="btn btn-success"  role="button" disabled="disabled" ><span
+                                        class="glyphicon glyphicon-ok-circle"></span> Reserver</a>
+                            </c:otherwise>
+                        </c:choose>
+                        <a class="btn btn-info" href="modifierOeuvrevente.htm?id=${item.idOeuvrevente}" role="button"><span
                             class="glyphicon glyphicon-pencil"></span> Modifier</a>
                         <a class="btn btn-danger" href="verifierSupprimerOeuvrevente.htm?id=${item.idOeuvrevente}" role="button"><span
                                 class="glyphicon glyphicon-remove-circle"></span> Supprimer</a></td>

@@ -1,16 +1,22 @@
 package com.epul.oeuvres.controle;
 
+import com.epul.oeuvres.dao.AdherentService;
 import com.epul.oeuvres.dao.OeuvreventeService;
 import com.epul.oeuvres.dao.ProprietaireService;
+import com.epul.oeuvres.dao.ReservationService;
 import com.epul.oeuvres.meserreurs.MonException;
+import com.epul.oeuvres.metier.AdherentEntity;
 import com.epul.oeuvres.metier.OeuvreventeEntity;
 import com.epul.oeuvres.metier.ProprietaireEntity;
+import com.epul.oeuvres.metier.ReservationEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.Date;
+import java.util.Calendar;
 
 @Controller
 public class OeuvreventeControleur {
@@ -159,4 +165,63 @@ public class OeuvreventeControleur {
     }
 
 
+    @RequestMapping(value = "prereserverOeuvrevente.htm")
+    public ModelAndView prereserverOeuvrevente(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String destinationPage = "";
+        try {
+            int unid = Integer.parseInt(request.getParameter("id"));
+            OeuvreventeService unService = new OeuvreventeService();
+            OeuvreventeEntity uneOeuvrevente = unService.oeuvreventeById(unid);
+            request.setAttribute("ov", uneOeuvrevente);
+
+
+            AdherentService unAdherentService = new AdherentService();
+            request.setAttribute("mesAdherents", unAdherentService.consulterListeAdherents());
+
+
+            destinationPage = "vues/prereserverOeuvrevente";
+        } catch (Exception e) {
+            request.setAttribute("MesErreurs", e.getMessage());
+            destinationPage = "vues/Erreur";
+        }
+
+        return new ModelAndView(destinationPage);
+    }
+
+
+    @RequestMapping(value = "reserverOeuvrevente.htm")
+    public ModelAndView reserverOeuvrevente(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String destinationPage = "";
+        try {
+            OeuvreventeService unServiceOeuvrevente = new OeuvreventeService();
+            int unid = Integer.parseInt(request.getParameter("id"));
+            OeuvreventeEntity uneOeuvrevente = unServiceOeuvrevente.oeuvreventeById(unid);
+            uneOeuvrevente.setEtatOeuvrevente("R");
+            unServiceOeuvrevente.updateOeuvrevente(uneOeuvrevente);
+
+            unid = Integer.parseInt(request.getParameter("txtadherent"));
+            AdherentService unServiceAdherent = new AdherentService();
+            AdherentEntity unAdherent = unServiceAdherent.adherentById(unid);
+
+            ReservationEntity uneReservation = new ReservationEntity();
+            uneReservation.setAdherentByIdAdherent(unAdherent);
+            uneReservation.setOeuvreventeByIdOeuvrevente(uneOeuvrevente);
+            uneReservation.setStatut("en attente");
+
+            Calendar currenttime = Calendar.getInstance();
+            Date uneDate = new Date((currenttime.getTime()).getTime());
+
+            uneReservation.setDateReservation(uneDate);
+            ReservationService unServiceReservation = new ReservationService();
+            unServiceReservation.insertReservation(uneReservation);
+
+            request.setAttribute("mesOeuvreventes", unServiceOeuvrevente.consulterListeOeuvrevente());
+            destinationPage = "vues/listerOeuvrevente";
+        } catch (Exception e) {
+            request.setAttribute("MesErreurs", e.getMessage());
+            destinationPage = "vues/Erreur";
+        }
+
+        return new ModelAndView(destinationPage);
+    }
 }

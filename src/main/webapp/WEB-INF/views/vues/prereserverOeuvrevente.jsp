@@ -5,7 +5,7 @@
 <body>
 <%@include file="navigation.jsp"%>
 <H1> Modification d'une Oeuvre </H1>
-<form method="post" action="/updateOeuvrevente.htm?id=${ov.idOeuvrevente}" onsubmit="return teste()">
+<form method="post" action="/reserverOeuvrevente.htm?id=${ov.idOeuvrevente}" onsubmit="return teste()">
     <div class="col-md-12 well well-md">
         <h1>Ajouter Séjour</h1>
         <div class="row" >
@@ -15,7 +15,7 @@
         <div class="form-group">
             <label class="col-md-3 control-label">Titre de l'oeuvre : </label>
             <div class="col-md-3">
-                <INPUT type="text" name="txttitreov" value="${ov.titreOeuvrevente}" id="titreov" class="form-control" min="0">
+                <INPUT type="text" name="txttitreov" value="${ov.titreOeuvrevente}" id="titreov" class="form-control" min="0" disabled="disabled">
             </div>
         </div>
         <div class="row" >
@@ -25,7 +25,17 @@
         <div class="form-group">
             <label class="col-md-3 control-label">Prix de l'oeuvre : </label>
             <div class="col-md-3">
-                <INPUT type="text" name="txtprixov" value="${ov.prixOeuvrevente}" id="prixov" class="form-control" min="0">
+                <INPUT type="text" name="txtprixov" value="${ov.prixOeuvrevente}" id="prixov" class="form-control" min="0" disabled="disabled">
+            </div>
+        </div>
+        <div class="row" >
+            <div class="col-md-12" style ="border:none; background-color:transparent; height :20px;">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label">Proprietaire de l'oeuvre : </label>
+            <div class="col-md-3">
+                <INPUT type="text" name="txtpropov" value="${ov.proprietaire.nomProprietaire} ${ov.proprietaire.prenomProprietaire}" id="propov" class="form-control" min="0" disabled = "disabled">
             </div>
         </div>
         <div class="row" >
@@ -33,18 +43,11 @@
             </div>
         </div>
         <div>
-            <label for="selectprop">Choisir un propriétaire:</label>
-            <select id="selectprop" name="txtproprietaireov" required>
-                <option value="">--Choisir un propriétaire--</option>
-                <c:forEach items="${mesProprietaires}" var="itemProp">
-                    <c:choose>
-                        <c:when test="${ov.proprietaire.idProprietaire == itemProp.idProprietaire}">
-                            <option value="${itemProp.idProprietaire}" selected>${itemProp.nomProprietaire} ${itemProp.prenomProprietaire}</option>
-                        </c:when>
-                        <c:otherwise>
-                            <option value="${itemProp.idProprietaire}">${itemProp.nomProprietaire} ${itemProp.prenomProprietaire}</option>
-                        </c:otherwise>
-                    </c:choose>
+            <label for="selectprop">Choisir un adhérent:</label>
+            <select id="selectprop" name="txtadherent" required>
+                <option value="">--Choisir un adherent--</option>
+                <c:forEach items="${mesAdherents}" var="itemProp">
+                    <option value="${itemProp.idAdherent}" selected>${itemProp.nomAdherent} ${itemProp.prenomAdherent}</option>
                 </c:forEach>
             </select>
         </div>

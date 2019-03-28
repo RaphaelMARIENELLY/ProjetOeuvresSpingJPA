@@ -38,7 +38,7 @@
             <select id="selectprop" name="txtproprietaireov" required>
                 <option value="">--Choisir un propriétaire--</option>
                 <c:forEach items="${mesProprietaires}" var="itemProp">
-                    <option value="${itemProp.idProprietaire}">${itemProp.nomProprietaire} ${itemProp.prenomProprietaire}</option>
+                    <option value="${itemProp.idProprietaire}">${itemProp.nomProprietaire}</option>
                 </c:forEach>
             </select>
         </div>
