@@ -1,6 +1,7 @@
 package com.epul.oeuvres.metier;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 /**
  * Created by christian on 19/02/2017.
@@ -13,9 +14,13 @@ public class AdherentEntity {
     private String prenomAdherent;
     private String villeAdherent;
 
+    public void setIdAdherent(Integer idAdherent) {
+        this.idAdherent = idAdherent;
+    }
+
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "id_adherent")
+    @Column(name = "id_adherent", nullable = false)
     public int getIdAdherent() {
         return idAdherent;
     }
@@ -25,7 +30,7 @@ public class AdherentEntity {
     }
 
     @Basic
-    @Column(name = "nom_adherent")
+    @Column(name = "nom_adherent", nullable = false, length = 100)
     public String getNomAdherent() {
         return nomAdherent;
     }
@@ -35,7 +40,7 @@ public class AdherentEntity {
     }
 
     @Basic
-    @Column(name = "prenom_adherent")
+    @Column(name = "prenom_adherent", nullable = true, length = 100)
     public String getPrenomAdherent() {
         return prenomAdherent;
     }
@@ -45,7 +50,7 @@ public class AdherentEntity {
     }
 
     @Basic
-    @Column(name = "ville_adherent")
+    @Column(name = "ville_adherent", nullable = true, length = 100)
     public String getVilleAdherent() {
         return villeAdherent;
     }
@@ -79,4 +84,5 @@ public class AdherentEntity {
         result = 31 * result + (villeAdherent != null ? villeAdherent.hashCode() : 0);
         return result;
     }
+
 }

@@ -15,7 +15,7 @@
     <div class="form-group">
         <label class="col-md-3 control-label">Nom de l'adherent : </label>
         <div class="col-md-3">
-            <INPUT type="text" name="txtnom" value="${adh.nomAdherent}"  id="nom" class="form-control" min="0">
+            <INPUT type="text" name="txtnom" value="${adh.nomAdherent}"  id="nom" class="form-control" min="0" required>
         </div>
 
     </div>
@@ -26,7 +26,7 @@
     <div class="form-group">
         <label class="col-md-3 control-label">Prénom de l'adherent : </label>
         <div class="col-md-3">
-            <INPUT type="text" name="txtprenom" value="${adh.prenomAdherent}" id="prenom" class="form-control" min="0">
+            <INPUT type="text" name="txtprenom" value="${adh.prenomAdherent}" id="prenom" class="form-control" min="0" required>
         </div>
     </div>
     <div class="row" >
@@ -36,7 +36,7 @@
     <div class="form-group">
         <label class="col-md-3 control-label">Ville de l'adherent : </label>
         <div class="col-md-3">
-            <INPUT type="text" name="txtville" value="${adh.villeAdherent}" id="ville" class="form-control" min="0">
+            <INPUT type="text" name="txtville" value="${adh.villeAdherent}" id="ville" class="form-control" min="0" required>
         </div>
     </div>
     <div class="row" >

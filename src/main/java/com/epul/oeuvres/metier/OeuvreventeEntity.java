@@ -1,6 +1,7 @@
 package com.epul.oeuvres.metier;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 /**
  * Created by christian on 19/02/2017.
@@ -15,8 +16,16 @@ public class OeuvreventeEntity {
 
     private ProprietaireEntity proprietaire;
 
+    public void setIdOeuvrevente(Integer idOeuvrevente) {
+        this.idOeuvrevente = idOeuvrevente;
+    }
+
+    public void setPrixOeuvrevente(Double prixOeuvrevente) {
+        this.prixOeuvrevente = prixOeuvrevente;
+    }
+
     @Id
-    @Column(name = "id_oeuvrevente")
+    @Column(name = "id_oeuvrevente", nullable = false)
     public int getIdOeuvrevente() {
         return idOeuvrevente;
     }
@@ -26,7 +35,7 @@ public class OeuvreventeEntity {
     }
 
     @Basic
-    @Column(name = "titre_oeuvrevente")
+    @Column(name = "titre_oeuvrevente", nullable = false, length = 200)
     public String getTitreOeuvrevente() {
         return titreOeuvrevente;
     }
@@ -36,7 +45,7 @@ public class OeuvreventeEntity {
     }
 
     @Basic
-    @Column(name = "etat_oeuvrevente")
+    @Column(name = "etat_oeuvrevente", nullable = false, length = 1)
     public String getEtatOeuvrevente() {
         return etatOeuvrevente;
     }
@@ -46,7 +55,7 @@ public class OeuvreventeEntity {
     }
 
     @Basic
-    @Column(name = "prix_oeuvrevente")
+    @Column(name = "prix_oeuvrevente", nullable = false, precision = 0)
     public double getPrixOeuvrevente() {
         return prixOeuvrevente;
     }

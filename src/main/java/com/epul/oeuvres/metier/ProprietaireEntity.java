@@ -1,6 +1,7 @@
 package com.epul.oeuvres.metier;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 /**
  * Created by christian on 19/02/2017.
@@ -12,8 +13,9 @@ public class ProprietaireEntity {
     private String nomProprietaire;
     private String prenomProprietaire;
 
+
     @Id
-    @Column(name = "id_proprietaire")
+    @Column(name = "id_proprietaire", nullable = false)
     public int getIdProprietaire() {
         return idProprietaire;
     }
@@ -23,7 +25,7 @@ public class ProprietaireEntity {
     }
 
     @Basic
-    @Column(name = "nom_proprietaire")
+    @Column(name = "nom_proprietaire", nullable = false, length = 100)
     public String getNomProprietaire() {
         return nomProprietaire;
     }
@@ -33,7 +35,7 @@ public class ProprietaireEntity {
     }
 
     @Basic
-    @Column(name = "prenom_proprietaire")
+    @Column(name = "prenom_proprietaire", nullable = true, length = 100)
     public String getPrenomProprietaire() {
         return prenomProprietaire;
     }
@@ -65,4 +67,6 @@ public class ProprietaireEntity {
         result = 31 * result + (prenomProprietaire != null ? prenomProprietaire.hashCode() : 0);
         return result;
     }
+
+
 }

@@ -1,18 +1,17 @@
 package com.epul.oeuvres.dao;
 
 import com.epul.oeuvres.meserreurs.MonException;
-import com.epul.oeuvres.metier.OeuvreventeEntity;
-import com.epul.oeuvres.metier.ReservationEntity;
-
+import com.epul.oeuvres.metier.ReservationOeuvreventeEntity;
 import javax.persistence.EntityTransaction;
 import java.util.List;
 
-public class ReservationService extends EntityService {
+public class ReservationOeuvreventeService extends EntityService {
     /* Insertion d'une reservation
      * param ReservationEntity uneRes
      * */
 
-    public void insertReservation(ReservationEntity uneRes) throws MonException {
+
+    public void insertReservation(ReservationOeuvreventeEntity uneRes) throws MonException {
         try
         {
             EntityTransaction transac = startTransaction();
@@ -33,16 +32,15 @@ public class ReservationService extends EntityService {
 
     /* Lister les reservations
      * */
-    public List<ReservationEntity> consulterListeOeuvrevente() throws MonException {
-        List<ReservationEntity> mesReservations = null;
+    public List<ReservationOeuvreventeEntity> consulterListeReservation() throws MonException {
+        List<ReservationOeuvreventeEntity> mesReservations = null;
         try
         {
             EntityTransaction transac = startTransaction();
             transac.begin();
-            mesReservations = (List<ReservationEntity>)
+            mesReservations = (List<ReservationOeuvreventeEntity>)
                     entitymanager.createQuery(
-                            "SELECT r FROM ReservationEntity r " +
-                                    "ORDER BY r.idAdherent").getResultList();
+                            "SELECT r FROM ReservationOeuvreventeEntity r ").getResultList();
             entitymanager.close();
         }
         catch (RuntimeException e)
@@ -54,16 +52,46 @@ public class ReservationService extends EntityService {
         return mesReservations;
     }
 
+    /* Renvoie l'id de la prochaine reservation
+     * */
+    public int nextIdReservation() throws MonException {
+        List<ReservationOeuvreventeEntity> mesReservations = null;
+        int nextId = 0;
+        try
+        {
+            EntityTransaction transac = startTransaction();
+            transac.begin();
+            mesReservations = (List<ReservationOeuvreventeEntity>)
+                    entitymanager.createQuery(
+                            "SELECT r FROM ReservationOeuvreventeEntity r ").getResultList();
+            entitymanager.close();
+
+            for (ReservationOeuvreventeEntity res : mesReservations) {
+                if (res.getIdReservationOeuvrevente() > nextId){
+                    nextId = res.getIdReservationOeuvrevente();
+                }
+            }
+
+        }
+        catch (RuntimeException e)
+        {
+            new MonException("Erreur de lecture", e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return nextId+1;
+    }
+
     /* Consultation d'une reservation par son numéro
      */
-    public ReservationEntity reservationById(int numero) throws MonException {
-        List<ReservationEntity> reservations = null;
-        ReservationEntity reservation = new ReservationEntity();
+    public ReservationOeuvreventeEntity reservationById(int numero) throws MonException {
+        List<ReservationOeuvreventeEntity> reservations = null;
+        ReservationOeuvreventeEntity reservation = new ReservationOeuvreventeEntity();
         try {
             EntityTransaction transac = startTransaction();
             transac.begin();
 
-            reservations = (List<ReservationEntity>)entitymanager.createQuery("SELECT r FROM ReservationEntity r WHERE r.idOeuvrevente="+numero).getResultList();
+            reservations = (List<ReservationOeuvreventeEntity>)entitymanager.createQuery("SELECT r FROM ReservationOeuvreventeEntity r WHERE r.idReservationOeuvrevente="+numero).getResultList();
             reservation = reservations.get(0);
 
             entitymanager.close();
@@ -77,7 +105,7 @@ public class ReservationService extends EntityService {
     }
 
 
-    public void updateReservation(ReservationEntity uneReservation) throws MonException {
+    public void updateReservation(ReservationOeuvreventeEntity uneReservation) throws MonException {
         try {
             EntityTransaction transac = startTransaction();
             transac.begin();
@@ -92,11 +120,11 @@ public class ReservationService extends EntityService {
         }
     }
 
-    public void supprimerReervation(ReservationEntity uneReservation) throws MonException {
+    public void supprimerReservation(ReservationOeuvreventeEntity uneReservation) throws MonException {
         try {
             EntityTransaction transac = startTransaction();
             transac.begin();
-            entitymanager.remove(entitymanager.find(ReservationEntity.class, uneReservation.getIdOeuvrevente()));
+            entitymanager.remove(entitymanager.find(ReservationOeuvreventeEntity.class, uneReservation.getIdReservationOeuvrevente()));
             transac.commit();
             entitymanager.close();
         } catch (MonException e) {

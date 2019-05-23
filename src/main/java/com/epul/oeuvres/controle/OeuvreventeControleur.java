@@ -1,14 +1,8 @@
 package com.epul.oeuvres.controle;
 
-import com.epul.oeuvres.dao.AdherentService;
-import com.epul.oeuvres.dao.OeuvreventeService;
-import com.epul.oeuvres.dao.ProprietaireService;
-import com.epul.oeuvres.dao.ReservationService;
+import com.epul.oeuvres.dao.*;
 import com.epul.oeuvres.meserreurs.MonException;
-import com.epul.oeuvres.metier.AdherentEntity;
-import com.epul.oeuvres.metier.OeuvreventeEntity;
-import com.epul.oeuvres.metier.ProprietaireEntity;
-import com.epul.oeuvres.metier.ReservationEntity;
+import com.epul.oeuvres.metier.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -188,33 +182,92 @@ public class OeuvreventeControleur {
         return new ModelAndView(destinationPage);
     }
 
+//
+//            @RequestMapping(value = "reserverOeuvrevente.htm")
+//            public ModelAndView reserverOeuvrevente(HttpServletRequest request, HttpServletResponse response) throws Exception {
+//                String destinationPage = "";
+//                try {
+//                    /* Changement de l'état de l'oeuvre vente */
+//                    OeuvreventeService unServiceOeuvrevente = new OeuvreventeService();
+//                    int unid = Integer.parseInt(request.getParameter("id"));
+//                    OeuvreventeEntity uneOeuvrevente = unServiceOeuvrevente.oeuvreventeById(unid);
+//                    uneOeuvrevente.setEtatOeuvrevente("R");
+//                    unServiceOeuvrevente.updateOeuvrevente(uneOeuvrevente);
+//                    uneOeuvrevente = unServiceOeuvrevente.oeuvreventeById(unid);
+//
+//                    /* Récupération de l'adhérent */
+//                    int unidAdh = Integer.parseInt(request.getParameter("txtadherent"));
+//                    AdherentService unServiceAdherent = new AdherentService();
+//                    AdherentEntity unAdherent = unServiceAdherent.adherentById(unidAdh);
+//
+//                    /* Date de réservation */
+//                    Calendar dateactuelle = Calendar.getInstance();
+//                    Date uneDate = new Date((dateactuelle.getTime()).getTime());
+//
+//                    System.out.println("pointdecontrole1" + "    adh:"+unAdherent.getIdAdherent()+"    vente:"+uneOeuvrevente+"    date:"+uneDate);
+//
+//                    /* Définition de la nouvelle réservation */
+//                    ReservationEntity uneReservation = new ReservationEntity();
+//                    uneReservation.setAdherentByIdAdherent(unAdherent);
+//                    uneReservation.setOeuvreventeByIdOeuvrevente(uneOeuvrevente);
+//                    uneReservation.setStatut("en attente");
+//                    uneReservation.setDateReservation(uneDate);
+//
+//            /* Ajout de la nouvelle reservation */
+//            ReservationService unServiceReservation = new ReservationService();
+//            unServiceReservation.insertReservation(uneReservation);
+//
+//            /* Préparation liste oeuvreventes */
+//            request.setAttribute("mesOeuvreventes", unServiceOeuvrevente.consulterListeOeuvrevente());
+//            destinationPage = "vues/listerOeuvrevente";
+//        } catch (Exception e) {
+//            request.setAttribute("MesErreurs", e.getMessage());
+//            destinationPage = "vues/Erreur";
+//        }
+//
+//        return new ModelAndView(destinationPage);
+//    }
 
     @RequestMapping(value = "reserverOeuvrevente.htm")
     public ModelAndView reserverOeuvrevente(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String destinationPage = "";
         try {
+            /* Changement de l'état de l'oeuvre vente */
             OeuvreventeService unServiceOeuvrevente = new OeuvreventeService();
             int unid = Integer.parseInt(request.getParameter("id"));
             OeuvreventeEntity uneOeuvrevente = unServiceOeuvrevente.oeuvreventeById(unid);
             uneOeuvrevente.setEtatOeuvrevente("R");
             unServiceOeuvrevente.updateOeuvrevente(uneOeuvrevente);
+            uneOeuvrevente = unServiceOeuvrevente.oeuvreventeById(unid);
 
-            unid = Integer.parseInt(request.getParameter("txtadherent"));
+            /* Récupération de l'adhérent */
+            int unidAdh = Integer.parseInt(request.getParameter("txtadherent"));
             AdherentService unServiceAdherent = new AdherentService();
-            AdherentEntity unAdherent = unServiceAdherent.adherentById(unid);
+            AdherentEntity unAdherent = unServiceAdherent.adherentById(unidAdh);
 
-            ReservationEntity uneReservation = new ReservationEntity();
-            uneReservation.setAdherentByIdAdherent(unAdherent);
-            uneReservation.setOeuvreventeByIdOeuvrevente(uneOeuvrevente);
+            /* Date de réservation */
+            Calendar dateactuelle = Calendar.getInstance();
+            Date uneDate = new Date((dateactuelle.getTime()).getTime());
+
+            System.out.println("pointdecontrole1" + "    adh:"+unAdherent.getIdAdherent()+"    vente:"+uneOeuvrevente+"    date:"+uneDate);
+
+            /* Définition de la nouvelle réservation */
+            ReservationOeuvreventeEntity uneReservation = new ReservationOeuvreventeEntity();
+            //uneReservation.setIdReservationOeuvrevente(100000);
+            uneReservation.setAdherent(unAdherent);
+            uneReservation.setOeuvrevente(uneOeuvrevente);
             uneReservation.setStatut("en attente");
-
-            Calendar currenttime = Calendar.getInstance();
-            Date uneDate = new Date((currenttime.getTime()).getTime());
-
             uneReservation.setDateReservation(uneDate);
-            ReservationService unServiceReservation = new ReservationService();
+
+            /* Recherche du nouvel id */
+            ReservationOeuvreventeService unServiceReservation = new ReservationOeuvreventeService();
+            int nextId = unServiceReservation.nextIdReservation();
+            uneReservation.setIdReservationOeuvrevente(nextId);
+
+            /* Ajout de la nouvelle reservation */
             unServiceReservation.insertReservation(uneReservation);
 
+            /* Préparation liste oeuvreventes */
             request.setAttribute("mesOeuvreventes", unServiceOeuvrevente.consulterListeOeuvrevente());
             destinationPage = "vues/listerOeuvrevente";
         } catch (Exception e) {
