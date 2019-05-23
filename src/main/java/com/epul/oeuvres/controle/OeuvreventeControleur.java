@@ -277,4 +277,69 @@ public class OeuvreventeControleur {
 
         return new ModelAndView(destinationPage);
     }
+
+    @RequestMapping(value = "gererReservation.htm")
+    public ModelAndView gererReservation(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String destinationPage;
+        try {
+            // HttpSession session = request.getSession();
+            ReservationOeuvreventeService uneReservationService = new ReservationOeuvreventeService();
+            request.setAttribute("mesReservations", uneReservationService.consulterListeReservation());
+            destinationPage = "vues/gererReservation";
+        } catch (MonException e) {
+            request.setAttribute("MesErreurs", e.getMessage());
+            destinationPage = "vues/Erreur";
+
+        }
+        return new ModelAndView(destinationPage);
+    }
+
+
+    @RequestMapping(value = "confirmerReservation.htm")
+    public ModelAndView confirmerReservation(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String destinationPage = "";
+        try {
+            ReservationOeuvreventeService uneReservationService = new ReservationOeuvreventeService();
+            int unid = Integer.parseInt(request.getParameter("id"));
+            ReservationOeuvreventeEntity uneReservation = uneReservationService.reservationById(unid);
+
+            uneReservation.setStatut("vendu");
+            uneReservationService.updateReservation(uneReservation);
+
+            /* Préparation liste reservations */
+            request.setAttribute("mesReservations", uneReservationService.consulterListeReservation());
+            destinationPage = "vues/gererReservation";
+        } catch (Exception e) {
+            request.setAttribute("MesErreurs", e.getMessage());
+            destinationPage = "vues/Erreur";
+        }
+
+        return new ModelAndView(destinationPage);
+    }
+
+    @RequestMapping(value = "supprimerReservation.htm")
+    public ModelAndView supprimerReservation(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String destinationPage = "";
+        try {
+            ReservationOeuvreventeService uneReservationService = new ReservationOeuvreventeService();
+            int unid = Integer.parseInt(request.getParameter("id"));
+            ReservationOeuvreventeEntity uneReservation = uneReservationService.reservationById(unid);
+            int oeuvreventId = uneReservation.getOeuvrevente().getIdOeuvrevente();
+            uneReservationService.supprimerReservation(uneReservation);
+
+            OeuvreventeService uneOeuvreVenteService = new OeuvreventeService();
+            OeuvreventeEntity uneOeuvrevente = uneOeuvreVenteService.oeuvreventeById(oeuvreventId);
+            uneOeuvrevente.setEtatOeuvrevente("L");
+            uneOeuvreVenteService.updateOeuvrevente(uneOeuvrevente);
+
+            /* Préparation liste reservations */
+            request.setAttribute("mesReservations", uneReservationService.consulterListeReservation());
+            destinationPage = "vues/gererReservation";
+        } catch (Exception e) {
+            request.setAttribute("MesErreurs", e.getMessage());
+            destinationPage = "vues/Erreur";
+        }
+
+        return new ModelAndView(destinationPage);
+    }
 }
