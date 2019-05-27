@@ -62,17 +62,19 @@ INSERT INTO `adherent` (`id_adherent`, `nom_adherent`, `prenom_adherent`, `ville
 CREATE TABLE `oeuvrepret` (
   `id_oeuvrepret` int(10) UNSIGNED NOT NULL,
   `titre_oeuvrepret` varchar(200) NOT NULL,
-  `id_proprietaire` int(10) UNSIGNED DEFAULT NULL
+  `etat_oeuvrepret` varchar(2) NOT NULL,
+  `id_proprietaire` int(10) UNSIGNED DEFAULT NULL,
+  `id_adherent` int(10) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `oeuvrepret`
 --
 
-INSERT INTO `oeuvrepret` (`id_oeuvrepret`, `titre_oeuvrepret`, `id_proprietaire`) VALUES
-(1, 'Oeuvre en pret 1', 1000),
-(2, 'Oeuvre en pret 2', 1000),
-(3, 'TEST', 1000);
+INSERT INTO `oeuvrepret` (`id_oeuvrepret`, `titre_oeuvrepret`, `etat_oeuvrepret`, `id_proprietaire`, `id_adherent`) VALUES
+(1, 'Oeuvre en pret 1', 'N',  1000, NULL),
+(2, 'Oeuvre en pret 2', 'N', 1000, NULL),
+(3, 'TEST', 'N', 1000, NULL);
 
 -- --------------------------------------------------------
 
@@ -148,6 +150,20 @@ INSERT INTO `reservation_oeuvrevente` (`id_reservation_oeuvrevente`, `id_oeuvrev
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `emprunt`
+--
+
+CREATE TABLE `emprunt` (
+  `id_emprunt` int(10) UNSIGNED NOT NULL,
+  `id_oeuvrepret` int(10) UNSIGNED NOT NULL,
+  `id_adherent` int(10) UNSIGNED NOT NULL,
+  `date_pret` date NOT NULL,
+  `date_retour` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `utilisateur`
 --
 
@@ -206,6 +222,14 @@ ALTER TABLE `reservation_oeuvrevente`
   ADD KEY `id_adherent` (`id_adherent`);
 
 --
+-- Index pour la table `emprunt`
+--
+ALTER TABLE `emprunt`
+  ADD PRIMARY KEY (`id_emprunt`),
+  ADD KEY `id_oeuvrepret` (`id_oeuvrepret`),
+  ADD KEY `id_adherent` (`id_adherent`);
+
+--
 -- Index pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
@@ -246,6 +270,12 @@ ALTER TABLE `reservation_oeuvrevente`
   MODIFY `id_reservation_oeuvrevente` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100001;
 
 --
+-- AUTO_INCREMENT pour la table `emprunt`
+--
+ALTER TABLE `emprunt`
+  MODIFY `id_emprunt` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100001;
+
+--
 -- Contraintes pour les tables déchargées
 --
 
@@ -267,6 +297,13 @@ ALTER TABLE `oeuvrevente`
 ALTER TABLE `reservation_oeuvrevente`
   ADD CONSTRAINT `reservation_oeuvrevente_ibfk_1` FOREIGN KEY (`id_oeuvrevente`) REFERENCES `oeuvrevente` (`id_oeuvrevente`),
   ADD CONSTRAINT `reservation_oeuvrevente_ibfk_2` FOREIGN KEY (`id_adherent`) REFERENCES `adherent` (`id_adherent`);
+
+--
+-- Contraintes pour la table `emprunt`
+--
+ALTER TABLE `emprunt`
+  ADD CONSTRAINT `emprunt_ibfk_1` FOREIGN KEY (`id_oeuvrepret`) REFERENCES `oeuvrepret` (`id_oeuvrepret`),
+  ADD CONSTRAINT `emprunt_ibfk_2` FOREIGN KEY (`id_adherent`) REFERENCES `adherent` (`id_adherent`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

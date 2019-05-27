@@ -44,14 +44,16 @@
                 </li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <span class="glyphicon glyphicon-user"></span>
-                        Oeuvres Prets
+                        <span class="glyphicon glyphicon-briefcase"></span>
+                        Emprunts
                         <span class="caret"></span>
                     </a>
 
                     <ul class="dropdown-menu">
-                        <li><a href="ajouterOeuvrevente.htm"> <span class="glyphicon glyphicon-plus"></span> Ajout Oeuvre Pret</a></li>
-                        <li><a href="listerOeuvrevente.htm"><span class="glyphicon glyphicon-th-list"></span> Lister les oeuvres prets</a></li>
+                        <li><a href="ajouterOeuvrepret.htm"> <span class="glyphicon glyphicon-plus"></span> Ajout Oeuvre Pret</a></li>
+                        <li><a href="listerOeuvrepret.htm"><span class="glyphicon glyphicon-th-list"></span> Lister les oeuvres prets</a></li>
+                        <li><a href="preterOeuvrepret.htm"> <span class="glyphicon glyphicon-book"></span> Faire un Pret</a></li>
+                        <li><a href="gererOeuvrepret.htm"><span class="glyphicon glyphicon-cog"></span> Gerer les prets</a></li>
                     </ul>
                 </li>
                 <li><a href="javascript:fermer()"><span class="glyphicon glyphicon-log-out"></span> Quitter</a></li>
