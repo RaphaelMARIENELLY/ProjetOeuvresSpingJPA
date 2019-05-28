@@ -7,7 +7,6 @@
 <H1> Ajout d'un adhérent </H1>
 <form method="post" action="insererAdherent.htm" onsubmit="return teste()">
 <div class="col-md-12 well well-md">
-    <h1>Ajouter Séjour</h1>
     <div class="row" >
         <div class="col-md-12" style ="border:none; background-color:transparent; height :20px;">
         </div>
@@ -51,7 +50,7 @@
 
         <button type="button" class="btn btn-default btn-primary"
                 onclick="{
-                            window.location = '../index.jsp';
+                            window.location = 'index.htm';
                         }">
             <span class="glyphicon glyphicon-remove"></span> Annuler
 

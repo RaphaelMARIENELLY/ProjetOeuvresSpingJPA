@@ -1,15 +1,15 @@
 package com.epul.oeuvres.controle;
 
-import com.epul.oeuvres.dao.AdherentService;
-import com.epul.oeuvres.dao.Service;
+import com.epul.oeuvres.dao.*;
 import com.epul.oeuvres.meserreurs.MonException;
-import com.epul.oeuvres.metier.AdherentEntity;
+import com.epul.oeuvres.metier.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @Controller
 public class AdherentControleur {
@@ -133,6 +133,35 @@ public class AdherentControleur {
             AdherentService unService = new AdherentService();
             int unid = Integer.parseInt(request.getParameter("id"));
             AdherentEntity unAdherent = unService.adherentById(unid);
+
+            //suppression des prets
+            OeuvrepretService pretService = new OeuvrepretService();
+            EmpruntService empService = new EmpruntService();
+            List<EmpruntEntity> empruntEntities = empService.empruntsByAdherentId(unAdherent.getIdAdherent());
+
+            for(EmpruntEntity empruntEntity : empruntEntities) {
+
+                OeuvrepretEntity opEnt = empruntEntity.getOeuvrepret();
+                opEnt.setEtatOeuvrepret("N");
+                //opEnt.setAdherent(null);
+
+                empService.supprimerEmprunt(empruntEntity);
+                pretService.updateOeuvrepret(opEnt);
+            }
+
+            //suppression des ventes
+            ReservationOeuvreventeService unereservationService = new ReservationOeuvreventeService();
+            List<ReservationOeuvreventeEntity> reservations = unereservationService.reservationByAdherentId(unid);
+            for (ReservationOeuvreventeEntity reservation: reservations) {
+                OeuvreventeEntity oeuvreventeEntity = reservation.getOeuvrevente();
+
+                OeuvreventeService oeuvreventeService = new OeuvreventeService();
+                oeuvreventeEntity.setEtatOeuvrevente("L");
+                oeuvreventeService.updateOeuvrevente(oeuvreventeEntity);
+
+                unereservationService.supprimerReservation(reservation);
+            }
+
             unService.supprimerAdherent(unAdherent);
 
             destinationPage = "index";

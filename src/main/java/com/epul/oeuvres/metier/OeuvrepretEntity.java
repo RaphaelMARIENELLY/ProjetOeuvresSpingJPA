@@ -11,7 +11,7 @@ public class OeuvrepretEntity {
     private String titreOeuvrepret;
     private String etatOeuvrepret;
     private ProprietaireEntity proprietaire;
-    private AdherentEntity adherent;
+    //private AdherentEntity adherent;
 
     @Id
     @Column(name = "id_oeuvrepret", nullable = false)
@@ -53,7 +53,7 @@ public class OeuvrepretEntity {
         this.proprietaire = proprietaire;
     }
 
-    @ManyToOne
+    /*@ManyToOne
     @JoinColumn(name = "id_adherent", referencedColumnName = "id_adherent", nullable = false)
     public AdherentEntity getAdherent() {
         return adherent;
@@ -61,7 +61,7 @@ public class OeuvrepretEntity {
 
     public void setAdherent(AdherentEntity adherent) {
         this.adherent = adherent;
-    }
+    }*/
 
     @Override
     public boolean equals(Object o) {
@@ -71,12 +71,12 @@ public class OeuvrepretEntity {
         return idOeuvrepret == that.idOeuvrepret &&
                 Objects.equals(titreOeuvrepret, that.titreOeuvrepret) &&
                 Objects.equals(etatOeuvrepret, that.etatOeuvrepret) &&
-                Objects.equals(proprietaire, that.proprietaire) &&
-                Objects.equals(adherent, that.adherent);
+                Objects.equals(proprietaire, that.proprietaire);
+                //Objects.equals(adherent, that.adherent);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idOeuvrepret, titreOeuvrepret, etatOeuvrepret, proprietaire, adherent);
+        return Objects.hash(idOeuvrepret, titreOeuvrepret, etatOeuvrepret, proprietaire);
     }
 }

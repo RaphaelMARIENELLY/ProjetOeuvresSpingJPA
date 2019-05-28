@@ -63,18 +63,18 @@ CREATE TABLE `oeuvrepret` (
   `id_oeuvrepret` int(10) UNSIGNED NOT NULL,
   `titre_oeuvrepret` varchar(200) NOT NULL,
   `etat_oeuvrepret` varchar(2) NOT NULL,
-  `id_proprietaire` int(10) UNSIGNED DEFAULT NULL,
-  `id_adherent` int(10) UNSIGNED DEFAULT NULL
+  `id_proprietaire` int(10) UNSIGNED DEFAULT NULL
+  /*`id_adherent` int(10) UNSIGNED DEFAULT NULL*/
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `oeuvrepret`
 --
 
-INSERT INTO `oeuvrepret` (`id_oeuvrepret`, `titre_oeuvrepret`, `etat_oeuvrepret`, `id_proprietaire`, `id_adherent`) VALUES
-(1, 'Oeuvre en pret 1', 'N',  1000, NULL),
-(2, 'Oeuvre en pret 2', 'N', 1000, NULL),
-(3, 'TEST', 'N', 1000, NULL);
+INSERT INTO `oeuvrepret` (`id_oeuvrepret`, `titre_oeuvrepret`, `etat_oeuvrepret`, `id_proprietaire`/*, `id_adherent`*/) VALUES
+(1, 'Oeuvre en pret 1', 'N',  1000),
+(2, 'Oeuvre en pret 2', 'N', 1000),
+(3, 'TEST', 'N', 1000);
 
 -- --------------------------------------------------------
 

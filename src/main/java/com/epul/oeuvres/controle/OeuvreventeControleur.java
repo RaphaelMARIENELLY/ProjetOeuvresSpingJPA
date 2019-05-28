@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Date;
 import java.util.Calendar;
+import java.util.List;
 
 @Controller
 public class OeuvreventeControleur {
@@ -145,6 +146,13 @@ public class OeuvreventeControleur {
         try {
             OeuvreventeService unService = new OeuvreventeService();
             int unid = Integer.parseInt(request.getParameter("id"));
+
+            ReservationOeuvreventeService unereservationService = new ReservationOeuvreventeService();
+            List<ReservationOeuvreventeEntity> reservations = unereservationService.reservationByOeuvreventeId(unid);
+            for (ReservationOeuvreventeEntity reservation: reservations) {
+                unereservationService.supprimerReservation(reservation);
+            }
+
             OeuvreventeEntity uneOeuvrevente = unService.oeuvreventeById(unid);
             unService.supprimerOeuvrevente(uneOeuvrevente);
             request.setAttribute("mesOeuvreventes", unService.consulterListeOeuvrevente());

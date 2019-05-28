@@ -1,6 +1,7 @@
 package com.epul.oeuvres.dao;
 
 import com.epul.oeuvres.meserreurs.MonException;
+import com.epul.oeuvres.metier.AdherentEntity;
 import com.epul.oeuvres.metier.EmpruntEntity;
 
 import javax.persistence.EntityTransaction;
@@ -122,5 +123,23 @@ public class EmpruntService extends EntityService {
         catch (Exception exc) {
             throw new MonException(exc.getMessage(), "systeme");
         }
+    }
+
+    public List<EmpruntEntity> empruntsByAdherentId(int numero) throws MonException {
+        List<EmpruntEntity> emprunts = null;
+        EmpruntEntity emprunt = new EmpruntEntity();
+        try {
+            EntityTransaction transac = startTransaction();
+            transac.begin();
+
+            emprunts = (List<EmpruntEntity>) entitymanager.createQuery("SELECT a FROM EmpruntEntity a WHERE a.adherentPret.idAdherent=" + numero).getResultList();
+
+            entitymanager.close();
+        } catch (RuntimeException e) {
+            new MonException("Erreur de lecture", e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return emprunts;
     }
 }

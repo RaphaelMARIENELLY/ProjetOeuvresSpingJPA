@@ -3,10 +3,7 @@
 <div class="container">
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">Médiathèque de POLYTECH</a>
-            </div>
-            <p class="navbar-text">Gestion de l'exposition 2016</p>
+
             <ul class="nav navbar-nav">
                 <li><a href="index.htm"> <span class="glyphicon glyphicon-home"></span> Accueil</a></li>
                 <c:if test="${sessionScope.id == null }">
@@ -32,14 +29,15 @@
                 </li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <span class="glyphicon glyphicon-user"></span>
-                        Oeuvres Ventes
+                        <span class="glyphicon glyphicon-shopping-cart"></span>
+                        Ventes
                         <span class="caret"></span>
                     </a>
 
                     <ul class="dropdown-menu">
                         <li><a href="ajouterOeuvrevente.htm"> <span class="glyphicon glyphicon-plus"></span> Ajout Oeuvre Vente</a></li>
                         <li><a href="listerOeuvrevente.htm"><span class="glyphicon glyphicon-th-list"></span> Lister les oeuvres ventes</a></li>
+                        <li><a href="gererReservation.htm"><span class="glyphicon glyphicon-refresh"></span> Gerer les réservations</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">

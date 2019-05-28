@@ -17,7 +17,7 @@
             <tr>
                 <th class="col-md-2">Titre</th>
                 <th class="col-md-2">Propriétaire</th>
-                <th class="col-md-2">Adhérant</th>
+                <!--<th class="col-md-2">Adhérant</th>-->
             </tr>
 
             <c:forEach items="${mesOeuvreprets}" var="item">
@@ -25,14 +25,14 @@
                     <td>${item.titreOeuvrepret}</td>
                     <td>${item.proprietaire.nomProprietaire} ${item.proprietaire.prenomProprietaire}</td>
 
-                    <c:choose>
+                    <%--<c:choose>
                         <c:when test="${empty item.adherent}">
                             <td>Aucun adhérent</td>
                         </c:when>
                         <c:otherwise>
                             <td>${item.adherent.nomAdherent} ${item.adherent.prenomAdherent}</td>
                         </c:otherwise>
-                    </c:choose>
+                    </c:choose>--%>
 
                     <td>
 

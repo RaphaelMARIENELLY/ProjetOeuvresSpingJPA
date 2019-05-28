@@ -7,7 +7,6 @@
 <H1> Ajout d'une Oeuvre </H1>
 <form method="post" action="/insererOeuvrevente.htm" onsubmit="return teste()">
     <div class="col-md-12 well well-md">
-        <h1>Ajouter Séjour</h1>
         <div class="row" >
             <div class="col-md-12" style ="border:none; background-color:transparent; height :20px;">
             </div>
@@ -32,23 +31,25 @@
             <div class="col-md-12" style ="border:none; background-color:transparent; height :20px;">
             </div>
         </div>
-        <div>
-            <label for="selectprop">Choisir un propriétaire:</label>
-
-            <select id="selectprop" name="txtproprietaireov" required>
-                <option value="">--Choisir un propriétaire--</option>
-                <c:forEach items="${mesProprietaires}" var="itemProp">
-                    <option value="${itemProp.idProprietaire}">${itemProp.nomProprietaire}</option>
-                </c:forEach>
-            </select>
+        <div class="form-group">
+            <label class="col-md-3" for="selectprop">Choisir un propriétaire:</label>
+            <div class="col-md-3">
+                <select id="selectprop" name="txtproprietaireop" required>
+                    <option value="">--Choisir un propriétaire--</option>
+                    <c:forEach items="${mesProprietaires}" var="itemProp">
+                        <option value="${itemProp.idProprietaire}">${itemProp.nomProprietaire}</option>
+                    </c:forEach>
+                </select>
+            </div>
         </div>
+
         <div class="form-group">
             <button type="submit" class="btn btn-default btn-primary"><span class="glyphicon glyphicon-ok"></span>
                 Ajouter
             </button>
             <button type="button" class="btn btn-default btn-primary"
                     onclick="{
-                            window.location = '../index.jsp';
+                            window.location = 'index.htm';
                         }">
                 <span class="glyphicon glyphicon-remove"></span> Annuler
 

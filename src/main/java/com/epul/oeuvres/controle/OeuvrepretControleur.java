@@ -165,7 +165,7 @@ public class OeuvrepretControleur {
             AdherentEntity unAdh = (new AdherentService()).adherentById(idAdh);
 
             uneOp.setEtatOeuvrepret("P");
-            uneOp.setAdherent(unAdh);
+            //uneOp.setAdherent(unAdh);
             unService.updateOeuvrepret(uneOp);
 
 
@@ -266,7 +266,7 @@ public class OeuvrepretControleur {
             OeuvrepretService unService = new OeuvrepretService();
             OeuvrepretEntity uneOeuvrepret = unService.oeuvrepretById(unid);
             uneOeuvrepret.setEtatOeuvrepret("N");
-            uneOeuvrepret.setAdherent(null);
+            //uneOeuvrepret.setAdherent(null);
             unService.updateOeuvrepret(uneOeuvrepret);
 
             request.setAttribute("mesOeuvreprets", unService.consulterListeOeuvrepret());

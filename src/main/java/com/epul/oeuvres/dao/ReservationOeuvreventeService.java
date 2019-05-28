@@ -134,4 +134,49 @@ public class ReservationOeuvreventeService extends EntityService {
             throw new MonException(exc.getMessage(), "systeme");
         }
     }
+
+    /* Consultation des reservations par son numéro d oeuvrevente
+     */
+    public List<ReservationOeuvreventeEntity> reservationByOeuvreventeId(int numero) throws MonException {
+        // to commit
+
+        List<ReservationOeuvreventeEntity> reservations = null;
+        try {
+            EntityTransaction transac = startTransaction();
+            transac.begin();
+
+            reservations = (List<ReservationOeuvreventeEntity>)entitymanager.createQuery("SELECT r FROM ReservationOeuvreventeEntity r WHERE r.oeuvrevente.idOeuvrevente="+numero).getResultList();
+
+            entitymanager.close();
+        }catch (RuntimeException e)
+        {
+            new MonException("Erreur de lecture", e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return reservations;
+    }
+
+
+    /* Consultation des reservations par son numéro d adherent
+     */
+    public List<ReservationOeuvreventeEntity> reservationByAdherentId(int numero) throws MonException {
+        // to commit
+
+        List<ReservationOeuvreventeEntity> reservations = null;
+        try {
+            EntityTransaction transac = startTransaction();
+            transac.begin();
+
+            reservations = (List<ReservationOeuvreventeEntity>)entitymanager.createQuery("SELECT r FROM ReservationOeuvreventeEntity r WHERE r.adherent.idAdherent="+numero).getResultList();
+
+            entitymanager.close();
+        }catch (RuntimeException e)
+        {
+            new MonException("Erreur de lecture", e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return reservations;
+    }
 }

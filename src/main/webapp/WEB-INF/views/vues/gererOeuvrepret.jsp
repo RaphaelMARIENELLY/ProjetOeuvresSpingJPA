@@ -31,7 +31,7 @@
                         <div class="panel-body">
 
                             <div>
-                                <label>Adherent : ${itemOv.adherent.nomAdherent} ${itemOv.adherent.prenomAdherent}</label>
+                                <label>Adherent : ${item.adherentPret.nomAdherent} ${item.adherentPret.prenomAdherent}</label>
                             </div>
                             <div>
                                 <label>Date de Pret : ${item.datePret}</label>

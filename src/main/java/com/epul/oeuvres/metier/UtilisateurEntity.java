@@ -1,7 +1,6 @@
 package com.epul.oeuvres.metier;
 
 import javax.persistence.*;
-
 import java.util.Objects;
 
 
@@ -59,3 +58,6 @@ public class UtilisateurEntity {
         return Objects.hash(numUtil, nomUtil, motPasse, role);
     }
 }
+
+
+
